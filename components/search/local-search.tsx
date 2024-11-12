@@ -1,11 +1,13 @@
 "use client";
 
-import React, { InputHTMLAttributes, useEffect, useState } from "react";
-import { Input } from "../ui/input";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { InputHTMLAttributes, useEffect, useState } from "react";
+
 import { formURLQuery, removeKeysFromURLQuery } from "@/lib/url";
+import { cn } from "@/lib/utils";
+
+import { Input } from "../ui/input";
 
 interface LocalSearchProps extends InputHTMLAttributes<HTMLInputElement> {
   route: string;
@@ -81,6 +83,7 @@ function LocalSearch({
         className={cn(
           "paragraph-regular no-focus placeholder:text-dark400_light700 border-none shadow-none outline-none"
         )}
+        {...props}
       />
     </div>
   );

@@ -1,8 +1,9 @@
+import Link from "next/link";
+
+import HomeFilter from "@/components/filters/home-filter";
 import LocalSearch from "@/components/search/local-search";
 import { buttonVariants } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import Link from "next/link";
-import { Suspense } from "react";
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -14,7 +15,7 @@ const questions = [
     title: "How to learn React",
     description: "I want to learn React, can anyone help me?",
     tags: [
-      { _id: "1", name: "React" },
+      { _id: "1", name: "react" },
       { _id: "2", name: "javascript" },
     ],
     author: { _id: "1", name: "John Doe" },
@@ -28,8 +29,8 @@ const questions = [
     title: "How to learn javascript",
     description: "I want to learn React, can anyone help me?",
     tags: [
-      { _id: "1", name: "React" },
       { _id: "2", name: "javascript" },
+      { _id: "1", name: "React" },
     ],
     author: { _id: "1", name: "John Doe" },
     upvotes: 10,
@@ -40,11 +41,18 @@ const questions = [
 ];
 
 export default async function Home({ searchParams }: SearchParams) {
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
-  const filteredQuestions = questions.filter((question) =>
-    question.title.toLowerCase().includes(query?.toLowerCase())
-  );
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query?.toLowerCase());
+    const matchesFilter = filter
+      ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+
+    return matchesQuery && matchesFilter;
+  });
 
   return (
     <>
@@ -61,14 +69,13 @@ export default async function Home({ searchParams }: SearchParams) {
         </Link>
       </section>
       <section className="mt-11">
-        <Suspense fallback={<>fallback ui</>}>
-          <LocalSearch
-            route="/"
-            imgSrc="/icons/search.svg"
-            placeholder="Search questions..."
-            className=""
-          />
-        </Suspense>
+        <LocalSearch
+          route="/"
+          imgSrc="/icons/search.svg"
+          placeholder="Search questions..."
+          className=""
+        />
+        <HomeFilter />
       </section>
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
