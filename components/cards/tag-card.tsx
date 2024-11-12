@@ -2,14 +2,14 @@ import Link from "next/link";
 import React from "react";
 
 import ROUTES from "@/constants/routes";
+import { getDevIconClassName } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
-import { getDevIconClassName } from "@/lib/utils";
 
 interface TagCardProps {
   _id: string;
   name: string;
-  questions: number;
+  questions?: number;
   showCount?: boolean;
   compact?: boolean;
 }
