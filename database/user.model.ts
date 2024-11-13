@@ -1,6 +1,4 @@
 import { model, models, Schema } from "mongoose";
-import { Interface } from "readline";
-import { string } from "zod";
 
 export interface IUser {
   name: string;
@@ -27,6 +25,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-const User = models?.user || model<IUser>("User", UserSchema);
+const User = models?.User || model<IUser>("User", UserSchema);
 
 export default User;
