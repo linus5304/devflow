@@ -30,5 +30,8 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }
