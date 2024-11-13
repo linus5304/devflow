@@ -3,11 +3,11 @@ import { model, models, Schema } from "mongoose";
 export interface IVote {
   userId: Schema.Types.ObjectId;
   id: Schema.Types.ObjectId; // question id or answer id
-  type: "question" | "answer";
-  voteType: "upvote" | "downvote";
-  createdAt: Date;
-  updatedAt: Date;
+  type: number;
+  voteType: number;
 }
+
+export interface IVoteDoc extends IVote, Document {}
 
 const VoteSchema = new Schema({
   userId: {
@@ -33,7 +33,7 @@ const VoteSchema = new Schema({
   timestamps: true
 });
 
-VoteSchema.index({ userId: 1, targetId: 1 }, { unique: true });
+VoteSchema.index({ userId: 1, id: 1 }, { unique: true });
 
 const Vote = models?.Vote || model<IVote>("Vote", VoteSchema);
 
